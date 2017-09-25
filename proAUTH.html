@@ -1,0 +1,38 @@
+<html>
+
+<body>
+    <div align="center">
+        <input id="source" type="text" name="source" placeholder="Source"><br>
+        <input id="usr" type="text" name="usr" placeholder="User"><br>
+        <input id="pwd" type="password" name="pwd" placeholder="Password"><br>
+        <button onclick="submit()" on-tap="submit()" type="button">Submit</button>
+    </div>
+</body>
+<script>
+    function submit() {
+        var source = document.getElementById("source").value;
+        var usr = document.getElementById("usr").value;
+        var pwd = document.getElementById("pwd").value;
+        var token = btoa(usr + ":" + pwd);
+
+        var src = source;
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                console.log("done")
+                var urlParams = new URLSearchParams(window.location.search);
+                document.location.href = urlParams.get('redirect_uri')
+                    + '#state=' + urlParams.get('state')
+                    + '&access_token=' + token
+                    + '&token_type=Bearer'
+                    + '&source=' + source
+            }
+        }.bind(this);
+        xhr.open('GET', src, true);
+        xhr.setRequestHeader("Authorization", "Basic " + token);
+        xhr.send();
+    }
+
+</script>
+
+</html>
