@@ -25,8 +25,12 @@
             source = 'https://' + source;
         }
 
+        console.log(token)
+        console.log(source)
+
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function () {
+            console.log('sdlkfnsdjkfhk<fgbjksfdbfgkjsdbfksbkjfbsk')
             if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {    
                 var urlParams = new URLSearchParams(window.location.search);
                 document.location.href = urlParams.get('redirect_uri')
@@ -36,6 +40,7 @@
             }
         }.bind(this);
         var sourceToCall = source + "/AudevRest/DataSourceData/0000000026";
+        console.log(sourceToCall)
         xhr.open('GET', sourceToCall, true);
         xhr.setRequestHeader("Authorization", "Basic " + token);
         xhr.send();
