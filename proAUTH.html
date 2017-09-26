@@ -25,9 +25,6 @@
             source = 'https://' + source;
         }
 
-        console.log(token)
-        console.log(source)
-
         var urlParams = new URLSearchParams(window.location.search);
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function () {
@@ -38,9 +35,7 @@
                 + '&token_type=Bearer'
             }
         }.bind(this);
-        // var urlParams = new URLSearchParams(window.location.search);
-        var sourceToCall = source + urlParams.get('redirect_uri');// + "/AudevRest/DataSourceData/0000000026";
-        console.log(sourceToCall)
+        var sourceToCall = source + urlParams.get('source');
         xhr.open('GET', sourceToCall, true);
         xhr.setRequestHeader("Authorization", "Basic " + token);
         xhr.send();
