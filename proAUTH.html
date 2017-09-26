@@ -28,16 +28,17 @@
         console.log(token)
         console.log(source)
 
+        var urlParams = new URLSearchParams(window.location.search);
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function () {
             if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {    
-                var urlParams = new URLSearchParams(window.location.search);
                 document.location.href = urlParams.get('redirect_uri')
                 + '#state=' + urlParams.get('state')
                 + '&access_token=' + token + source //need to substring the url in the lambdafunction | alexa only supports an access token
                 + '&token_type=Bearer'
             }
         }.bind(this);
+        // var urlParams = new URLSearchParams(window.location.search);
         var sourceToCall = source + urlParams.get('redirect_uri');// + "/AudevRest/DataSourceData/0000000026";
         console.log(sourceToCall)
         xhr.open('GET', sourceToCall, true);
