@@ -15,20 +15,28 @@
         var pwd = document.getElementById("pwd").value;
         var token = btoa(usr + ":" + pwd);
 
-        var src = source;
+        var reHTTP = /http\:\/\//;
+        var reHTTPS = /https\:\/\//;
+
+        if (reHTTPS.test(source) == false) {
+            if (reHTTP.test(source) == true) {
+                source = source.substring(7, source.len);
+            }
+            source = 'https://' + source;
+        }
+
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function () {
             if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-                console.log("done")
+
                 var urlParams = new URLSearchParams(window.location.search);
                 document.location.href = urlParams.get('redirect_uri')
                     + '#state=' + urlParams.get('state')
-                    + '&access_token=' + token
+                    + '&access_token=' + token + source //need to substring the url in the lambdafunction | alexa only supports an access token
                     + '&token_type=Bearer'
-                    + '&source=' + source
             }
         }.bind(this);
-        xhr.open('GET', src, true);
+        xhr.open('GET', source, true);
         xhr.setRequestHeader("Authorization", "Basic " + token);
         xhr.send();
     }
