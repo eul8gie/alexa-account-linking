@@ -27,16 +27,16 @@
 
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function () {
-            if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-
+            if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {    
                 var urlParams = new URLSearchParams(window.location.search);
                 document.location.href = urlParams.get('redirect_uri')
-                    + '#state=' + urlParams.get('state')
-                    + '&access_token=' + token + source //need to substring the url in the lambdafunction | alexa only supports an access token
-                    + '&token_type=Bearer'
+                + '#state=' + urlParams.get('state')
+                + '&access_token=' + token + source //need to substring the url in the lambdafunction | alexa only supports an access token
+                + '&token_type=Bearer'
             }
         }.bind(this);
-        xhr.open('GET', source, true);
+        var sourceToCall = source + "/AudevRest/DataSourceData/0000000026";
+        xhr.open('GET', sourceToCall, true);
         xhr.setRequestHeader("Authorization", "Basic " + token);
         xhr.send();
     }
