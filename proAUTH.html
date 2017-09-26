@@ -38,7 +38,7 @@
                 + '&token_type=Bearer'
             }
         }.bind(this);
-        var sourceToCall = source;// + "/AudevRest/DataSourceData/0000000026";
+        var sourceToCall = source + urlParams.get('redirect_uri');// + "/AudevRest/DataSourceData/0000000026";
         console.log(sourceToCall)
         xhr.open('GET', sourceToCall, true);
         xhr.setRequestHeader("Authorization", "Basic " + token);
